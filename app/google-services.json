@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "221048097832",
+    "firebase_url": "https://xi-blog-test-default-rtdb.firebaseio.com",
+    "project_id": "xi-blog-test",
+    "storage_bucket": "xi-blog-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221048097832:android:0bdefbab87a94d2e03791d",
+        "android_client_info": {
+          "package_name": "com.android.example.test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqng3JV6-mbaa01IqE-FPdndbqbKOvMoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221048097832:android:292951aaa2e6594f03791d",
+        "android_client_info": {
+          "package_name": "com.android.example.tester"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqng3JV6-mbaa01IqE-FPdndbqbKOvMoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221048097832:android:8970a14eda97771403791d",
+        "android_client_info": {
+          "package_name": "com.example.mobileapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqng3JV6-mbaa01IqE-FPdndbqbKOvMoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
