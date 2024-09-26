@@ -15,18 +15,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -38,25 +46,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.mobileapp.data.StudentViewModel
 import com.example.mobileapp.models.Student
+import com.example.mobileapp.navigation.ROUTE_ADD_STUDENT
+import com.example.mobileapp.navigation.ROUTE_LOGOUT
 import com.example.mobileapp.navigation.ROUTE_UPDATE_STUDENT
+import com.example.mobileapp.navigation.ROUTE_VIEW_STUDENT
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ViewStudentsScreen(navController: NavHostController){
     val auth: FirebaseAuth = Firebase.auth
@@ -64,21 +74,54 @@ fun ViewStudentsScreen(navController: NavHostController){
     Column (modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally){
 
-        var context = LocalContext.current
-        var studentRepository = StudentViewModel(navController,context)
+        val context = LocalContext.current
+        val studentRepository = StudentViewModel(navController,context)
 
 
         val emptyUploadState = remember { mutableStateOf(Student("","","","")) }
-        var emptyUploadsListState = remember { mutableStateListOf<Student>() }
+        val emptyUploadsListState = remember { mutableStateListOf<Student>() }
 
-        var students = studentRepository.viewStudent(emptyUploadState, emptyUploadsListState)
+        val students = studentRepository.viewStudent(emptyUploadState, emptyUploadsListState)
 
+        Row (modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically){
+
+//TOP BAR
+            TopAppBar(
+                title = { Text(text = "Feedback Blogs", modifier = Modifier.padding(10.dp).align(Alignment.CenterVertically)) },
+
+                actions = {
+                    IconButton(onClick = { /*TODO*/
+                        navController.navigate( ROUTE_LOGOUT) }) {
+                        Icon(imageVector = Icons.Filled.Person, contentDescription = "Profile")
+                    }
+
+                    IconButton(onClick = { /*TODO*/
+                        navController.navigate( ROUTE_ADD_STUDENT) }) {
+                        Icon(imageVector = Icons.Filled.AddCircle, contentDescription = "Add icon")
+                    }
+
+                    IconButton(onClick = { /*TODO*/
+                        navController.navigate( ROUTE_VIEW_STUDENT)}) {
+                        Icon(imageVector = Icons.Filled.Home, contentDescription = "Home icon")
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Blue,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
+
+                )
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+
+//TITLE
         Column(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "All Students",
+            Text(text = "All Blogs",
                 fontSize = 30.sp,
                 fontFamily = FontFamily.SansSerif,
                 color = Color.Black)
@@ -98,22 +141,21 @@ fun ViewStudentsScreen(navController: NavHostController){
                 }
             }
         }
+
     }
 
 }
 
 @Composable
 fun StudentItem(imageUrl:String,firstname:String,desc:String,id:String,navController: NavHostController,studentRepository:StudentViewModel){
-    var showFullText by remember {
-        mutableStateOf(false)
-    }
+    var showFullText by remember { mutableStateOf(false) }
     val context= LocalContext.current
+
     Column (modifier = Modifier.fillMaxWidth()){
-        Card (
-            modifier = Modifier
-                .padding(10.dp)
-                .height(210.dp)
-                .animateContentSize(),
+        Card (modifier = Modifier
+            .padding(10.dp)
+            .height(210.dp)
+            .animateContentSize(),
             shape = MaterialTheme.shapes.medium,
             colors = CardDefaults.cardColors(
                 containerColor = Color.Gray
@@ -129,6 +171,7 @@ fun StudentItem(imageUrl:String,firstname:String,desc:String,id:String,navContro
                         painter = rememberAsyncImagePainter(imageUrl),
                         contentDescription = null,
                         contentScale = ContentScale.Crop)
+
                     Row {
                         Button(
                             onClick = {
@@ -171,6 +214,11 @@ fun StudentItem(imageUrl:String,firstname:String,desc:String,id:String,navContro
                         color = Color.White,
                         fontSize = 30.sp,
                         fontWeight = FontWeight.Bold)
+                    Text(text = "LASTNAME",
+                        color = Color.Black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold)
+
                     Text(text = "DESCRIPTION",
                         color = Color.Black,
                         fontSize = 16.sp,
@@ -197,6 +245,6 @@ fun StudentItem(imageUrl:String,firstname:String,desc:String,id:String,navContro
 }
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ViewBlogPreview(){
+fun ViewBlogPreview() {
     ViewStudentsScreen(rememberNavController())
 }

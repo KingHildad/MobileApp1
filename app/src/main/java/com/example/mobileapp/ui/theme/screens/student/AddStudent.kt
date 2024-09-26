@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,19 +17,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,8 +33,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,9 +45,6 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.example.mobileapp.R
 import com.example.mobileapp.data.StudentViewModel
-import com.example.mobileapp.navigation.ROUTE_ADD_STUDENT
-import com.example.mobileapp.navigation.ROUTE_DASHBOARD
-import com.example.mobileapp.navigation.ROUTE_UPDATE_STUDENT
 import com.example.mobileapp.navigation.ROUTE_VIEW_STUDENT
 
 @Composable
@@ -79,30 +67,42 @@ fun Student(navController: NavController){
         mutableStateOf(value = "")
     }
 
-    var lastname by remember {
+    /*var lastname by remember {
         mutableStateOf(value = "")
     }
     var gender by remember {
         mutableStateOf(value = "")
-    }
+    }*/
     var desc by remember {
         mutableStateOf(value = "")
     }
 
-    Column (
+    Box {
+
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Image(painter = painterResource(id = R.drawable.pic2),
+            contentDescription = "Dashboard background" ,
+            contentScale = ContentScale.FillBounds)
+    }
+    Row(modifier = Modifier.fillMaxWidth()){Text(text = "ADD YOUR BLOG",
+        fontSize = 20.sp,
+        color = Color.Cyan,
+        fontFamily = FontFamily.SansSerif,
+        fontStyle = FontStyle.Normal,
+        textAlign = TextAlign.Center,
         modifier = Modifier
             .fillMaxWidth()
+            .background(Color.DarkGray)
+            .padding(20.dp)
+    )}
+
+
+    Column (modifier = Modifier.fillMaxWidth()
     ){
-        Text(text = "ADD NEW BLOG",
-            fontStyle = FontStyle.Normal,
-            fontWeight = FontWeight.Bold,
-            fontSize = 25.sp,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.Cyan)
-        )
-        Spacer(modifier = Modifier.height(15.dp))
+
+        Spacer(modifier = Modifier.height(80.dp))
 
         Column (
             modifier = Modifier.fillMaxWidth(),
@@ -121,7 +121,7 @@ fun Student(navController: NavController){
                         .clickable { launcher.launch("image/*") },
                     contentScale = ContentScale.Crop)
             }
-            Text(text = "Attach Picture Here")
+            Text(text = "Attach Picture Here",color = Color.Cyan)
         }
         Spacer(modifier = Modifier.height(15.dp))
         Text(text = "Blog Name",modifier = Modifier.align(Alignment.CenterHorizontally),fontSize = 23.sp)
@@ -129,8 +129,8 @@ fun Student(navController: NavController){
 
         OutlinedTextField(value = firstname,
             onValueChange ={newFirstName -> firstname = newFirstName},
-            label = { Text(text = "Enter Your Blog Name") },
-            placeholder = { Text(text = "Please Enter Blog Name") },
+            label = { Text(text = "Enter Your Blog Name",color = Color.Cyan) },
+            placeholder = { Text(text = "Please Enter Blog Name",color = Color.Cyan) },
             modifier = Modifier
                 .wrapContentWidth()
                 .align(Alignment.CenterHorizontally))
@@ -141,8 +141,8 @@ fun Student(navController: NavController){
 
         OutlinedTextField(value = desc,
             onValueChange ={newDesc->desc=newDesc},
-            label = { Text(text = "Description") },
-            placeholder = { Text(text = "Descption") },
+            label = { Text(text = "Description",color = Color.Cyan) },
+            placeholder = { Text(text = "Descption",color = Color.Cyan) },
             modifier = Modifier
                 .wrapContentWidth()
                 .align(Alignment.CenterHorizontally)
@@ -157,7 +157,7 @@ fun Student(navController: NavController){
             Button(onClick = {
                 navController.navigate(ROUTE_VIEW_STUDENT)
             }) {
-                Text(text = "ALL BLOGS")
+                Text(text = "BACK TO BLOGS")
             }
             val context= LocalContext.current
 
@@ -174,14 +174,11 @@ fun Student(navController: NavController){
                     Toast.makeText(context,"Please select an image",Toast.LENGTH_LONG).show()
                 }
             }) {
-                Text(text = "PUBLISH")
+                Text(text = "PUBLISH BLOG")
             }
 
         }
-        Button(onClick = { navController.navigate(ROUTE_DASHBOARD) },modifier = Modifier.align(Alignment.CenterHorizontally))
-        {
-            Text(text = "BACK TO DASHBOARD",textAlign = TextAlign.Center)
-        }
+
 
 
 
@@ -191,4 +188,9 @@ fun Student(navController: NavController){
     }
 
 
+}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun GreetingPreview() {
+    Student(rememberNavController())
 }

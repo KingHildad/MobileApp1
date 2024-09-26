@@ -10,36 +10,36 @@ import com.google.firebase.database.FirebaseDatabase
 
 
 class AuthViewModel(var navController: NavController,var context: Context){
-        var mAuth: FirebaseAuth
+    var mAuth: FirebaseAuth
 
-        init {
-            mAuth= FirebaseAuth.getInstance()
-        }
+    init {
+        mAuth= FirebaseAuth.getInstance()
+    }
 
-        fun signup(firstname: String,lastname: String,email: String,password: String){
-                if (firstname.isBlank() || lastname.isBlank() || email.isBlank() || password.isBlank()){
-                    Toast.makeText(context,"Please fill all the fields above",Toast.LENGTH_LONG).show()
-                    return
-                }else{
-                    mAuth.createUserWithEmailAndPassword(email,password)
-                        .addOnCompleteListener{
+    fun signup(firstname: String,lastname: String,email: String,password: String){
+        if (firstname.isBlank() || lastname.isBlank() || email.isBlank() || password.isBlank()){
+            Toast.makeText(context,"Please fill all the fields above",Toast.LENGTH_LONG).show()
+            return
+        }else{
+            mAuth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener{
+                    if (it.isSuccessful){
+                        val userdata = User(firstname,lastname,email,password,mAuth.currentUser!!.uid)
+                        val regRef = FirebaseDatabase.getInstance().getReference()
+                            .child("Users/"+mAuth.currentUser!!.uid)
+                        regRef.setValue(userdata).addOnCompleteListener {
                             if (it.isSuccessful){
-                                val userdata = User(firstname,lastname,email,password,mAuth.currentUser!!.uid)
-                                val regRef = FirebaseDatabase.getInstance().getReference()
-                                    .child("Users/"+mAuth.currentUser!!.uid)
-                                regRef.setValue(userdata).addOnCompleteListener {
-                                    if (it.isSuccessful){
-                                        Toast.makeText(context,"User Successfully Registered",Toast.LENGTH_LONG).show()
-                                    }else{
-                                        Toast.makeText(context,"${it.exception!!.message}",Toast.LENGTH_LONG).show()
-                                    }
-                                }
+                                Toast.makeText(context,"User Successfully Registered",Toast.LENGTH_LONG).show()
                             }else{
-                                navController.navigate(ROUTE_LOGIN)
+                                Toast.makeText(context,"${it.exception!!.message}",Toast.LENGTH_LONG).show()
                             }
                         }
+                    }else{
+                        navController.navigate(ROUTE_LOGIN)
+                    }
                 }
         }
+    }
     fun login(email: String,password: String){
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener {
             if (it.isSuccessful){

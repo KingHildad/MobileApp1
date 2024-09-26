@@ -2,27 +2,22 @@ package com.example.mobileapp.ui.theme.screens.register
 
 
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -63,6 +59,29 @@ fun Greeting(navController: NavController) {
     var password by remember {
         mutableStateOf(value = "")
     }
+    Box {
+
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Image(painter = painterResource(id = R.drawable.pic2),
+            contentDescription = "Dashboard background" ,
+            contentScale = ContentScale.FillBounds)
+    }
+    Row(modifier = Modifier.fillMaxWidth()){Text(text = "REGISTER HERE",
+        fontSize = 20.sp,
+        color = Color.Cyan,
+        fontFamily = FontFamily.SansSerif,
+        fontStyle = FontStyle.Normal,
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.Gray)
+            .padding(20.dp)
+    )}
+    Spacer(modifier = Modifier.height(10.dp))
+
+
     Column(
         modifier = Modifier
             .clip(shape = RoundedCornerShape(10.dp))
@@ -70,26 +89,7 @@ fun Greeting(navController: NavController) {
             .fillMaxWidth(),
         verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            text = "Welcome Back!",
-            fontSize = 40.sp,
-            fontFamily = FontFamily.SansSerif,
-            fontStyle = FontStyle.Normal,
-            textAlign = TextAlign.Center,
-            color = Color.Black,
-            modifier = Modifier
-                .background(Color.Gray)
-                .padding(20.dp)
-                .fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(10.dp))
 
-        Image(painter = painterResource(id = R.drawable.logo),
-            contentDescription = "Logo",
-            modifier = Modifier
-                .wrapContentHeight()
-                .fillMaxWidth()
-                .height(100.dp))
         Spacer(modifier = Modifier.height(10.dp))
         OutlinedTextField(value = firstname,
             onValueChange = {
@@ -98,8 +98,8 @@ fun Greeting(navController: NavController) {
             modifier = Modifier
                 .wrapContentWidth()
                 .align(Alignment.CenterHorizontally),
-            label = { Text(text = "Enter first name")},
-            placeholder = { Text(text = "Please Enter First Name")})
+            label = { Text(text = "Enter first name",color = Color.Cyan)},
+            placeholder = { Text(text = "Please Enter First Name",color = Color.Cyan)})
         Spacer(modifier = Modifier.height(10.dp))
         OutlinedTextField(value = lastname,
             onValueChange = {
@@ -108,8 +108,8 @@ fun Greeting(navController: NavController) {
             modifier = Modifier
                 .wrapContentWidth()
                 .align(Alignment.CenterHorizontally),
-            label = { Text(text = "Enter Last Name")},
-            placeholder = { Text(text = "Please Enter Last Name")}
+            label = { Text(text = "Enter Last Name",color = Color.Cyan)},
+            placeholder = { Text(text = "Please Enter Last Name", color = Color.Cyan)}
         )
         Spacer(modifier = Modifier.height(10.dp))
         OutlinedTextField(value = email,
@@ -119,8 +119,8 @@ fun Greeting(navController: NavController) {
             modifier = Modifier
                 .wrapContentWidth()
                 .align(Alignment.CenterHorizontally),
-            label = { Text(text = "Enter Email")},
-            placeholder = { Text(text = "Please Enter Email")}
+            label = { Text(text = "Enter Email",color = Color.Cyan)},
+            placeholder = { Text(text = "Please Enter Email",color = Color.Cyan)}
         )
         Spacer(modifier = Modifier.height(10.dp))
         OutlinedTextField(value = password,
@@ -130,27 +130,29 @@ fun Greeting(navController: NavController) {
             modifier = Modifier
                 .wrapContentWidth()
                 .align(Alignment.CenterHorizontally),
-            label = { Text(text = "Enter Password")},
-            placeholder = { Text(text = "Please Enter Password")}
+            label = { Text(text = "Enter Password",color = Color.Cyan)},
+            placeholder = { Text(text = "Please Enter Password",color = Color.Cyan)}
         )
         Spacer(modifier = Modifier.height(30.dp))
         Button(onClick = {
-                         val register = AuthViewModel(navController , context)
-                        register.signup(firstname.trim(),lastname.trim(),email.trim(),password.trim())
-                        navController.navigate(ROUTE_LOGIN)
+            val register = AuthViewModel(navController , context)
+            register.signup(firstname.trim(),lastname.trim(),email.trim(),password.trim())
+            navController.navigate(ROUTE_LOGIN)
         },
             modifier = Modifier
                 .wrapContentWidth()
                 .align(Alignment.CenterHorizontally),
-            colors = ButtonDefaults.buttonColors(Color.Black)) {
-            Text(text = "CLICK to REGISTER",
+            colors = ButtonDefaults.buttonColors(Color.Cyan)) {
+            Text(text = "CLICK to REGISTER", color = Color.Black,
                 modifier = Modifier.padding(10.dp))
         }
+        Spacer(modifier = Modifier.height(140.dp))
+
     }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview() {
-        Greeting(rememberNavController())
+    Greeting(rememberNavController())
 }

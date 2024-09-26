@@ -10,6 +10,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,9 +25,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.Button
@@ -50,6 +50,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -62,7 +64,7 @@ import coil.compose.rememberImagePainter
 import com.example.mobileapp.R
 import com.example.mobileapp.data.StudentViewModel
 import com.example.mobileapp.models.Student
-import com.example.mobileapp.navigation.ROUTE_DASHBOARD
+import com.example.mobileapp.navigation.ROUTE_LOGOUT
 import com.example.mobileapp.navigation.ROUTE_UPDATE_STUDENT
 import com.example.mobileapp.navigation.ROUTE_VIEW_STUDENT
 import com.google.firebase.database.DataSnapshot
@@ -76,28 +78,40 @@ fun UpdateStudent(navController: NavController, id: String) {
     var imageUri = rememberSaveable { mutableStateOf<Uri?>(null) }
     var existingImageUrl by rememberSaveable { mutableStateOf("") }
 
-    val painter = rememberImagePainter(
-        data = imageUri.value ?: R.drawable.ic_person,
-        builder = {
-            crossfade(true)
-        }
-    )
+    val painter = rememberImagePainter(data = imageUri.value ?: R.drawable.ic_person,
+        builder = { crossfade(true) })
 
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        imageUri.value = uri
-    }
+    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent())
+    { uri: Uri? -> imageUri.value = uri }
 
     var firstname by remember { mutableStateOf("") }
-    var lastname by remember { mutableStateOf("") }
-    var gender by remember { mutableStateOf("") }
     var desc by remember { mutableStateOf("") }
 
     val context = LocalContext.current
 
     val currentDataRef = FirebaseDatabase.getInstance().getReference()
         .child("Students/$id")
+
+    Box {
+
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Image(painter = painterResource(id = R.drawable.pic2),
+            contentDescription = "Dashboard background" ,
+            contentScale = ContentScale.FillBounds)
+    }
+    Row(modifier = Modifier.fillMaxWidth()){Text(text = "UPDATE YOUR BLOG",
+        fontSize = 20.sp,
+        color = Color.Cyan,
+        fontFamily = FontFamily.SansSerif,
+        fontStyle = FontStyle.Normal,
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.DarkGray)
+            .padding(20.dp)
+    )}
 
 
     DisposableEffect(Unit) {
@@ -125,12 +139,16 @@ fun UpdateStudent(navController: NavController, id: String) {
             BottomAppBar(
                 actions = {
                     IconButton(onClick = { /*TODO*/
-                        navController.navigate( ROUTE_DASHBOARD) }) {
+                        navController.navigate( ROUTE_VIEW_STUDENT) }) {
                         Icon(Icons.Filled.Home, contentDescription = "Home Icon")
                     }
                     IconButton(onClick = { /*TODO*/
                         navController.navigate(ROUTE_UPDATE_STUDENT +"/$id")}) {
                         Icon(Icons.Filled.Delete, contentDescription = "Delete Icon")
+                    }
+                    IconButton(onClick = { /*TODO*/
+                        navController.navigate( ROUTE_LOGOUT) }) {
+                        Icon(imageVector = Icons.Filled.Person, contentDescription = "Profile")
                     }
                 },
                 floatingActionButton = {
@@ -153,7 +171,7 @@ fun UpdateStudent(navController: NavController, id: String) {
                 .fillMaxWidth()
                 .background(Color.Gray)
         ) {
-            Text(
+            /*Text(
                 text = "UPDATE STUDENT",
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.Bold,
@@ -163,7 +181,7 @@ fun UpdateStudent(navController: NavController, id: String) {
                     .fillMaxWidth()
                     .padding(10.dp)
                     .background(Color.Green)
-            )
+            )*/
 
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -212,7 +230,7 @@ fun UpdateStudent(navController: NavController, id: String) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(onClick = {
-                    navController.navigate(ROUTE_UPDATE_STUDENT +"/$id")
+                    navController.navigate("$ROUTE_UPDATE_STUDENT/$id")
                 }) {
                     Text(text = "Delete Blog")
                 }

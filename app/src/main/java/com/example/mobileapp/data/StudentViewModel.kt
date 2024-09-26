@@ -25,7 +25,7 @@ class StudentViewModel(var navController: NavController,var context: Context) {
         authRepository= AuthViewModel(navController,context)
     }
     fun saveStudent(filePath: Uri,firstname:  String,desc: String,
-                   ){
+    ){
         var id = System.currentTimeMillis().toString()
         var storageReference = FirebaseStorage.getInstance().getReference()
             .child("Picture/$id")
@@ -46,7 +46,7 @@ class StudentViewModel(var navController: NavController,var context: Context) {
         }
     }
     fun viewStudent(student: MutableState<Student>,students: SnapshotStateList<Student>):
-    SnapshotStateList<Student>{
+            SnapshotStateList<Student>{
         val ref = FirebaseDatabase.getInstance().getReference().child("Students")
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {

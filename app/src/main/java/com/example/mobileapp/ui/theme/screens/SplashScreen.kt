@@ -1,7 +1,6 @@
 package com.example.mobileapp.ui.theme.screens
 
 import android.view.animation.OvershootInterpolator
-import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -21,12 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mobileapp.R
-import com.example.mobileapp.navigation.ROUTE_REGISTER
 import com.example.mobileapp.navigation.ROUTE_SPLASH
 import com.example.mobileapp.navigation.ROUTE_START
 import kotlinx.coroutines.delay
@@ -60,13 +57,13 @@ fun SplashScreen(navController: NavController){
         .background(Color.Black)
         .wrapContentHeight(Alignment.CenterVertically)
         .wrapContentWidth(Alignment.CenterHorizontally)) {
-       Text(text = "Xi Blogs",
-           fontSize = 40.sp,
-           color = Color.White,
-           modifier = Modifier.scale(scale.value))
+        Text(text = "Xi Blogs",
+            fontSize = 40.sp,
+            color = Color.White,
+            modifier = Modifier.scale(scale.value))
         Image(painter = painterResource(id = R.drawable.xi),
             contentDescription = "LOGO",
             modifier = Modifier.scale(scale.value)
-                                .size(400.dp))
+                .size(400.dp))
     }
 }
