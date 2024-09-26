@@ -152,7 +152,7 @@ fun StudentItem(imageUrl:String,firstname:String,desc:String,id:String,navContro
     val context= LocalContext.current
 
     Column (modifier = Modifier.fillMaxWidth()){
-        Card (modifier = Modifier
+        Card(modifier = Modifier
             .padding(10.dp)
             .height(210.dp)
             .animateContentSize(),
@@ -160,7 +160,9 @@ fun StudentItem(imageUrl:String,firstname:String,desc:String,id:String,navContro
             colors = CardDefaults.cardColors(
                 containerColor = Color.Gray
             )
-        ){
+        )
+
+        {
             Row {
                 Column (
                     horizontalAlignment = Alignment.CenterHorizontally,

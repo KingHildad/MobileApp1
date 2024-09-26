@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.mobileapp.navigation.AppNavHost
 import com.example.mobileapp.ui.theme.MobileAppTheme
@@ -20,8 +19,7 @@ class MainActivity : ComponentActivity() {
             MobileAppTheme {
                 // A surface container using the 'background' color from the theme
                 Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                    modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.Center
                 ) {
                     AppNavHost()
                 }
