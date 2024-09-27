@@ -62,7 +62,6 @@ import com.example.mobileapp.R
 import com.example.mobileapp.data.StudentViewModel
 import com.example.mobileapp.models.Student
 import com.example.mobileapp.navigation.ROUTE_LOGOUT
-import com.example.mobileapp.navigation.ROUTE_UPDATE_STUDENT
 import com.example.mobileapp.navigation.ROUTE_VIEW_STUDENT
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
