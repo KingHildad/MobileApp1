@@ -113,7 +113,7 @@ fun LoginScreen(navController: NavController){
                 .wrapContentWidth()
                 .align(Alignment.CenterHorizontally),
             colors = ButtonDefaults.buttonColors(Color.Cyan)) {
-            Text(text = "CLICKtoLOGIN",
+            Text(text = "CLICK to LOGIN",
                 color = Color.Black,
                 modifier = Modifier.padding(vertical = 10.dp))
         }

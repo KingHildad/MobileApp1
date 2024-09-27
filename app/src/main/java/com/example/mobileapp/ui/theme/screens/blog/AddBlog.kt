@@ -67,12 +67,6 @@ fun Student(navController: NavController){
         mutableStateOf(value = "")
     }
 
-    /*var lastname by remember {
-        mutableStateOf(value = "")
-    }
-    var gender by remember {
-        mutableStateOf(value = "")
-    }*/
     var desc by remember {
         mutableStateOf(value = "")
     }

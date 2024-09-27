@@ -246,7 +246,7 @@ fun UpdateStudent(navController: NavController, id: String) {
                         firstname = firstname,
                         desc = desc,
                         id = id,
-                        currentImageUrl = existingImageUrl // Pass the current image URL
+                        currentImageUrl = existingImageUrl
                     )
                 }) {
                     Text(text = "Update Blog")

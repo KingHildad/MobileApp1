@@ -74,12 +74,12 @@ class BlogViewModel(var navController: NavController, var context: Context) {
     ) {
         val databaseReference = FirebaseDatabase.getInstance().getReference("Students/$id")
 
-        // Retrieve the current blog data
+
         databaseReference.get().addOnSuccessListener { dataSnapshot ->
             val currentStudent = dataSnapshot.getValue(Blog::class.java)
 
             if (currentStudent != null) {
-                // Prepare updated blog data using non-null input or keep current data
+
                 val updatedStudent = Blog(
                     imageUrl = if (filePath != null && filePath != Uri.EMPTY) "" else currentStudent.imageUrl, // placeholder for imageUrl if new image is being uploaded
                     firstname = firstname ?: currentStudent.firstname,
@@ -87,7 +87,7 @@ class BlogViewModel(var navController: NavController, var context: Context) {
                     id = id
                 )
 
-                // If a new image is provided, upload it, then update the blog record
+
                 if (filePath != null && filePath != Uri.EMPTY) {
                     val storageReference = FirebaseStorage.getInstance().reference
                     val imageRef = storageReference.child("Picture/${UUID.randomUUID()}.jpg")
@@ -95,7 +95,7 @@ class BlogViewModel(var navController: NavController, var context: Context) {
                     imageRef.putFile(filePath)
                         .addOnSuccessListener {
                             imageRef.downloadUrl.addOnSuccessListener { uri ->
-                                updatedStudent.imageUrl = uri.toString() // Update the image URL
+                                updatedStudent.imageUrl = uri.toString()
                                 databaseReference.setValue(updatedStudent)
                                     .addOnCompleteListener { task ->
                                         if (task.isSuccessful) {
@@ -123,7 +123,7 @@ class BlogViewModel(var navController: NavController, var context: Context) {
                         }
                 }
             } else {
-                Toast.makeText(context, "Student not found", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Blog not found", Toast.LENGTH_SHORT).show()
             }
         }.addOnFailureListener {
             Toast.makeText(context, "Failed to retrieve blog data", Toast.LENGTH_SHORT).show()
