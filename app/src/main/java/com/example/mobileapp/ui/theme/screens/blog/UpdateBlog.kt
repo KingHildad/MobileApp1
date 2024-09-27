@@ -1,4 +1,4 @@
-package com.example.mobileapp.ui.theme.screens.student
+package com.example.mobileapp.ui.theme.screens.blog
 
 
 
@@ -59,8 +59,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.example.mobileapp.R
-import com.example.mobileapp.data.StudentViewModel
-import com.example.mobileapp.models.Student
+import com.example.mobileapp.data.BlogViewModel
+import com.example.mobileapp.models.Blog
 import com.example.mobileapp.navigation.ROUTE_LOGOUT
 import com.example.mobileapp.navigation.ROUTE_VIEW_STUDENT
 import com.google.firebase.database.DataSnapshot
@@ -95,7 +95,7 @@ fun UpdateStudent(navController: NavController, id: String) {
     DisposableEffect(Unit) {
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val student = snapshot.getValue(Student::class.java)
+                val student = snapshot.getValue(Blog::class.java)
                 student?.let {
                     firstname = it.firstname
                     desc = it.desc
@@ -236,7 +236,7 @@ fun UpdateStudent(navController: NavController, id: String) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(onClick = {
-                    val studentRepository = StudentViewModel(navController, context)
+                    val studentRepository = BlogViewModel(navController, context)
                     navController.navigate( ROUTE_VIEW_STUDENT)
 
                     studentRepository.updateStudent(

@@ -1,6 +1,6 @@
 package com.example.mobileapp.models
 
-class Student {
+class Blog {
     var imageUrl: String=""
     var firstname: String=""
     var desc: String=""

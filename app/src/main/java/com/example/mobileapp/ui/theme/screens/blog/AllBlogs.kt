@@ -1,4 +1,4 @@
-package com.example.mobileapp.ui.theme.screens.student
+package com.example.mobileapp.ui.theme.screens.blog
 
 
 
@@ -58,8 +58,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.mobileapp.R
-import com.example.mobileapp.data.StudentViewModel
-import com.example.mobileapp.models.Student
+import com.example.mobileapp.data.BlogViewModel
+import com.example.mobileapp.models.Blog
 import com.example.mobileapp.navigation.ROUTE_ADD_STUDENT
 import com.example.mobileapp.navigation.ROUTE_LOGOUT
 import com.example.mobileapp.navigation.ROUTE_UPDATE_STUDENT
@@ -85,11 +85,11 @@ fun ViewStudentsScreen(navController: NavHostController){
         horizontalAlignment = Alignment.CenterHorizontally){
 
         val context = LocalContext.current
-        val studentRepository = StudentViewModel(navController,context)
+        val studentRepository = BlogViewModel(navController,context)
 
 
-        val emptyUploadState = remember { mutableStateOf(Student("","","","")) }
-        val emptyUploadsListState = remember { mutableStateListOf<Student>() }
+        val emptyUploadState = remember { mutableStateOf(Blog("","","","")) }
+        val emptyUploadsListState = remember { mutableStateListOf<Blog>() }
 
         val students = studentRepository.viewStudent(emptyUploadState, emptyUploadsListState)
 
@@ -158,7 +158,7 @@ fun ViewStudentsScreen(navController: NavHostController){
 }
 
 @Composable
-fun StudentItem(imageUrl:String,firstname:String,desc:String,id:String,navController: NavHostController,studentRepository:StudentViewModel){
+fun StudentItem(imageUrl:String,firstname:String,desc:String,id:String,navController: NavHostController,studentRepository:BlogViewModel){
     var showFullText by remember { mutableStateOf(false) }
     val context= LocalContext.current
 

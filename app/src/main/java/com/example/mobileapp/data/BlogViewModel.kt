@@ -7,17 +7,16 @@ import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation.NavController
-import com.example.mobileapp.models.Student
+import com.example.mobileapp.models.Blog
 import com.example.mobileapp.navigation.ROUTE_VIEW_STUDENT
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.getValue
 import com.google.firebase.storage.FirebaseStorage
 import java.util.UUID
 
-class StudentViewModel(var navController: NavController,var context: Context) {
+class BlogViewModel(var navController: NavController, var context: Context) {
 
     var authRepository: AuthViewModel
 
@@ -33,7 +32,7 @@ class StudentViewModel(var navController: NavController,var context: Context) {
             if (it.isSuccessful){
                 storageReference.downloadUrl.addOnSuccessListener {
                     var imageUrl = it.toString()
-                    var houseData = Student(imageUrl, firstname, desc, id)
+                    var houseData = Blog(imageUrl, firstname, desc, id)
                     var dbRef = FirebaseDatabase.getInstance().getReference()
                         .child("Students/$id")
                     dbRef.setValue(houseData)
@@ -45,14 +44,14 @@ class StudentViewModel(var navController: NavController,var context: Context) {
             }
         }
     }
-    fun viewStudent(student: MutableState<Student>,students: SnapshotStateList<Student>):
-            SnapshotStateList<Student>{
+    fun viewStudent(student: MutableState<Blog>, students: SnapshotStateList<Blog>):
+            SnapshotStateList<Blog>{
         val ref = FirebaseDatabase.getInstance().getReference().child("Students")
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 students.clear()
                 for (snap in snapshot.children){
-                    val value = snap.getValue(Student::class.java)
+                    val value = snap.getValue(Blog::class.java)
                     student.value=value!!
                     students.add(value)
                 }
@@ -75,20 +74,20 @@ class StudentViewModel(var navController: NavController,var context: Context) {
     ) {
         val databaseReference = FirebaseDatabase.getInstance().getReference("Students/$id")
 
-        // Retrieve the current student data
+        // Retrieve the current blog data
         databaseReference.get().addOnSuccessListener { dataSnapshot ->
-            val currentStudent = dataSnapshot.getValue(Student::class.java)
+            val currentStudent = dataSnapshot.getValue(Blog::class.java)
 
             if (currentStudent != null) {
-                // Prepare updated student data using non-null input or keep current data
-                val updatedStudent = Student(
+                // Prepare updated blog data using non-null input or keep current data
+                val updatedStudent = Blog(
                     imageUrl = if (filePath != null && filePath != Uri.EMPTY) "" else currentStudent.imageUrl, // placeholder for imageUrl if new image is being uploaded
                     firstname = firstname ?: currentStudent.firstname,
                     desc = desc ?: currentStudent.desc,
                     id = id
                 )
 
-                // If a new image is provided, upload it, then update the student record
+                // If a new image is provided, upload it, then update the blog record
                 if (filePath != null && filePath != Uri.EMPTY) {
                     val storageReference = FirebaseStorage.getInstance().reference
                     val imageRef = storageReference.child("Picture/${UUID.randomUUID()}.jpg")
@@ -127,14 +126,14 @@ class StudentViewModel(var navController: NavController,var context: Context) {
                 Toast.makeText(context, "Student not found", Toast.LENGTH_SHORT).show()
             }
         }.addOnFailureListener {
-            Toast.makeText(context, "Failed to retrieve student data", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Failed to retrieve blog data", Toast.LENGTH_SHORT).show()
         }
     }
 
     fun deleteStudent(context: Context, id: String, navController: NavController) {
 
         val progressDialog = ProgressDialog(context).apply {
-            setMessage("Deleting student...")
+            setMessage("Deleting blog...")
             setCancelable(false)
             show()
         }

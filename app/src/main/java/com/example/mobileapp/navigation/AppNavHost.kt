@@ -10,9 +10,9 @@ import com.example.mobileapp.ui.theme.screens.login.LoginScreen
 import com.example.mobileapp.ui.theme.screens.logout.LogoutScreen
 import com.example.mobileapp.ui.theme.screens.register.Greeting
 import com.example.mobileapp.ui.theme.screens.start.StartScreen
-import com.example.mobileapp.ui.theme.screens.student.Student
-import com.example.mobileapp.ui.theme.screens.student.UpdateStudent
-import com.example.mobileapp.ui.theme.screens.student.ViewStudentsScreen
+import com.example.mobileapp.ui.theme.screens.blog.Student
+import com.example.mobileapp.ui.theme.screens.blog.UpdateStudent
+import com.example.mobileapp.ui.theme.screens.blog.ViewStudentsScreen
 
 @Composable
 fun AppNavHost(

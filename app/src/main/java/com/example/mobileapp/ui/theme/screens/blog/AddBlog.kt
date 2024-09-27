@@ -1,4 +1,4 @@
-package com.example.mobileapp.ui.theme.screens.student
+package com.example.mobileapp.ui.theme.screens.blog
 
 import android.net.Uri
 import android.widget.Toast
@@ -44,7 +44,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.example.mobileapp.R
-import com.example.mobileapp.data.StudentViewModel
+import com.example.mobileapp.data.BlogViewModel
 import com.example.mobileapp.navigation.ROUTE_VIEW_STUDENT
 
 @Composable
@@ -162,7 +162,7 @@ fun Student(navController: NavController){
             val context= LocalContext.current
 
             Button(onClick = {
-                val studentRepository=StudentViewModel(navController, context)
+                val studentRepository=BlogViewModel(navController, context)
                 if (imageUri.value!=null){
                     studentRepository.saveStudent(
                         filePath = imageUri.value!!,
