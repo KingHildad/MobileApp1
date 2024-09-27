@@ -7,6 +7,7 @@ package com.example.mobileapp.ui.theme.screens.student
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -48,6 +49,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -57,6 +59,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.mobileapp.R
 import com.example.mobileapp.data.StudentViewModel
 import com.example.mobileapp.models.Student
 import com.example.mobileapp.navigation.ROUTE_ADD_STUDENT
@@ -72,6 +75,13 @@ import com.google.firebase.auth.auth
 @Composable
 fun ViewStudentsScreen(navController: NavHostController){
     val auth: FirebaseAuth = Firebase.auth
+    Box {
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Image(painter = painterResource(id = R.drawable.pic2),
+            contentDescription = "Dashboard background" ,
+            contentScale = ContentScale.FillBounds)
+    }
 
     Column (modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally){
@@ -88,7 +98,6 @@ fun ViewStudentsScreen(navController: NavHostController){
         Row (modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically){
 
-//TOP BAR
             TopAppBar(
                 title = { Text(text = "Feedback Blogs", modifier = Modifier.padding(10.dp).align(Alignment.CenterVertically)) },
 
@@ -119,15 +128,16 @@ fun ViewStudentsScreen(navController: NavHostController){
             Spacer(modifier = Modifier.height(10.dp))
         }
 
-//TITLE
+
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Text(text = "All Blogs",
                 fontSize = 30.sp,
                 fontFamily = FontFamily.SansSerif,
-                color = Color.Black)
+                color = Color.White)
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -213,7 +223,6 @@ fun StudentItem(imageUrl:String,firstname:String,desc:String,id:String,navContro
                         maxLines = if (showFullText) 100 else 2,
                         overflow = TextOverflow.Ellipsis
                     )
-                    //BUTTONS
                     Row {
                         Button(
                             onClick = {
