@@ -23,7 +23,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -105,6 +107,7 @@ fun ViewStudentsScreen(navController: NavHostController){
                         navController.navigate( ROUTE_VIEW_STUDENT)}) {
                         Icon(imageVector = Icons.Filled.Home, contentDescription = "Home icon")
                     }
+
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Blue,
@@ -154,7 +157,8 @@ fun StudentItem(imageUrl:String,firstname:String,desc:String,id:String,navContro
     Column (modifier = Modifier.fillMaxWidth()){
         Card(modifier = Modifier
             .padding(10.dp)
-            .height(210.dp)
+            .height(370.dp)
+            .fillMaxWidth()
             .animateContentSize(),
             shape = MaterialTheme.shapes.medium,
             colors = CardDefaults.cardColors(
@@ -163,17 +167,53 @@ fun StudentItem(imageUrl:String,firstname:String,desc:String,id:String,navContro
         )
 
         {
-            Row {
+            Column() {
                 Column (
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ){
                     Image(modifier = Modifier
-                        .width(200.dp)
-                        .height(150.dp).padding(10.dp),
+                        .width(400.dp)
+                        .height(250.dp)
+                      .padding(10.dp),
                         painter = rememberAsyncImagePainter(imageUrl),
                         contentDescription = null,
                         contentScale = ContentScale.Crop)
 
+
+
+
+                    }
+                }
+
+
+                Column(modifier = Modifier
+                    .padding(vertical = 15.dp, horizontal = 15.dp)
+                    .verticalScroll(rememberScrollState()))
+                {
+                    Text(text = "BLOG NAME",
+                        color = Color.Black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold)
+                    Text(text = firstname,
+                        color = Color.White,
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold)
+
+                    Text(text = "DESCRIPTION",
+                        color = Color.Black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold)
+                    Text(modifier = Modifier.clickable {
+                        showFullText = !showFullText
+                    },
+                        text = desc,
+                        color = Color.White,
+                        fontSize = 25.sp,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = if (showFullText) 100 else 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    //BUTTONS
                     Row {
                         Button(
                             onClick = {
@@ -199,43 +239,9 @@ fun StudentItem(imageUrl:String,firstname:String,desc:String,id:String,navContro
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 16.sp)
                         }
-                    }
+
                 }
 
-
-                Column(modifier = Modifier
-                    .padding(vertical = 20.dp, horizontal = 15.dp)
-                    .verticalScroll(
-                        rememberScrollState()
-                    )) {
-                    Text(text = "FIRSTNAME",
-                        color = Color.Black,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold)
-                    Text(text = firstname,
-                        color = Color.White,
-                        fontSize = 30.sp,
-                        fontWeight = FontWeight.Bold)
-                    Text(text = "LASTNAME",
-                        color = Color.Black,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold)
-
-                    Text(text = "DESCRIPTION",
-                        color = Color.Black,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold)
-                    Text(modifier = Modifier.clickable {
-                        showFullText = !showFullText
-                    },
-                        text = desc,
-                        color = Color.White,
-                        fontSize = 25.sp,
-                        fontWeight = FontWeight.Bold,
-                        maxLines = if (showFullText) 100 else 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
 
 
 

@@ -23,7 +23,6 @@ fun AppNavHost(
         composable(ROUTE_REGISTER){ Greeting(navController)}
         composable(ROUTE_LOGIN){ LoginScreen(navController)}
         composable(ROUTE_LOGOUT){ LogoutScreen(navController)}
-
         composable(ROUTE_SPLASH){ SplashScreen(navController) }
         composable(ROUTE_ADD_STUDENT){ Student(navController)}
         composable(ROUTE_START){ StartScreen(navController)}
