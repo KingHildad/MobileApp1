@@ -24,21 +24,18 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -54,7 +51,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -74,6 +70,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UpdateStudent(navController: NavController, id: String) {
     var imageUri = rememberSaveable { mutableStateOf<Uri?>(null) }
@@ -93,26 +90,7 @@ fun UpdateStudent(navController: NavController, id: String) {
     val currentDataRef = FirebaseDatabase.getInstance().getReference()
         .child("Students/$id")
 
-    Box {
 
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Image(painter = painterResource(id = R.drawable.pic2),
-            contentDescription = "Dashboard background" ,
-            contentScale = ContentScale.FillBounds)
-    }
-    Row(modifier = Modifier.fillMaxWidth()){Text(text = "UPDATE YOUR BLOG",
-        fontSize = 20.sp,
-        color = Color.Cyan,
-        fontFamily = FontFamily.SansSerif,
-        fontStyle = FontStyle.Normal,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.DarkGray)
-            .padding(20.dp)
-    )}
 
 
     DisposableEffect(Unit) {
@@ -135,59 +113,83 @@ fun UpdateStudent(navController: NavController, id: String) {
         onDispose { currentDataRef.removeEventListener(listener) }
     }
 
-    Scaffold(
-        bottomBar = {
-            BottomAppBar(
-                actions = {
-                    IconButton(onClick = { /*TODO*/
-                        navController.navigate( ROUTE_VIEW_STUDENT) }) {
-                        Icon(Icons.Filled.Home, contentDescription = "Home Icon")
-                    }
-                    IconButton(onClick = { /*TODO*/
-                        navController.navigate(ROUTE_UPDATE_STUDENT +"/$id")}) {
-                        Icon(Icons.Filled.Delete, contentDescription = "Delete Icon")
-                    }
-                    IconButton(onClick = { /*TODO*/
-                        navController.navigate( ROUTE_LOGOUT) }) {
-                        Icon(imageVector = Icons.Filled.Person, contentDescription = "Profile")
-                    }
-                },
-                floatingActionButton = {
-                    FloatingActionButton(
-                        onClick = { /*TODO*/ },
-                        containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
-                        elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
-                    ) {
-                        Icon(Icons.Filled.AccountCircle, contentDescription = "Profile Icon")
-                    }
-                }
-            )
+    Box {
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Image(painter = painterResource(id = R.drawable.pic2),
+            contentDescription = "Dashboard background" ,
+            contentScale = ContentScale.FillBounds)
+    }
+
+    Scaffold{ innerPadding ->
+
+        Box {
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Image(painter = painterResource(id = R.drawable.pic2),
+                contentDescription = "Dashboard background" ,
+                contentScale = ContentScale.FillBounds)
         }
-    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
                 .padding(10.dp)
                 .fillMaxWidth()
-                .background(Color.Gray)
+
         ) {
-            /*Text(
-                text = "UPDATE STUDENT",
-                fontStyle = FontStyle.Normal,
-                fontWeight = FontWeight.Bold,
-                fontSize = 25.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
-                    .background(Color.Green)
-            )*/
+            Row (modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically){
+
+                TopAppBar(
+                    title = { Text(text = "Feedback Blogs", modifier = Modifier.padding(10.dp).align(Alignment.CenterVertically)) },
+
+                    actions = {
+                        IconButton(onClick = { /*TODO*/
+                            navController.navigate( ROUTE_LOGOUT) }) {
+                            Icon(imageVector = Icons.Filled.Person, contentDescription = "Profile")
+                        }
+
+                        IconButton(onClick = { /*TODO*/
+                            navController.navigate( ROUTE_VIEW_STUDENT)}) {
+                            Icon(imageVector = Icons.Filled.Home, contentDescription = "Home icon")
+                        }
+
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color.Black,
+                        titleContentColor = Color.White,
+                        navigationIconContentColor = Color.White
+
+                    )
+                )
+                Spacer(modifier = Modifier.height(30.dp))
+            }
 
             Column(
                 modifier = Modifier.fillMaxWidth().fillMaxHeight(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Row(modifier = Modifier.fillMaxWidth()){Text(text = "UPDATE YOUR BLOG",
+                    fontSize = 20.sp,
+                    color = Color.Cyan,
+                    fontFamily = FontFamily.SansSerif,
+                    fontStyle = FontStyle.Normal,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.DarkGray)
+                        .padding(20.dp)
+                )}
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+
+
+
+
+
+
                 Card(
                     shape = CircleShape,
                     modifier = Modifier
@@ -204,15 +206,17 @@ fun UpdateStudent(navController: NavController, id: String) {
                     )
                 }
                 Text(text = "Change Picture Here")
+                Spacer(modifier = Modifier.height(10.dp))
+
             }
             OutlinedTextField(
                 modifier = Modifier.wrapContentWidth().align(Alignment.CenterHorizontally),
-                label = { Text(text = "Enter First Name") },
-                placeholder = { Text(text = "Please Enter First Name") },
+                label = { Text(text = "Enter Blog Name") },
+                placeholder = { Text(text = "Please Enter Blog Name") },
                 value = firstname,
                 onValueChange = { newName -> firstname = newName }
             )
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(30.dp))
             OutlinedTextField(
                 modifier = Modifier
                     .height(160.dp)
@@ -224,17 +228,14 @@ fun UpdateStudent(navController: NavController, id: String) {
                 singleLine = false,
                 onValueChange = { newDesc -> desc = newDesc }
             )
+            Spacer(modifier = Modifier.height(20.dp))
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Button(onClick = {
-                    navController.navigate("$ROUTE_UPDATE_STUDENT/$id")
-                }) {
-                    Text(text = "Delete Blog")
-                }
                 Button(onClick = {
                     val studentRepository = StudentViewModel(navController, context)
                     navController.navigate( ROUTE_VIEW_STUDENT)
